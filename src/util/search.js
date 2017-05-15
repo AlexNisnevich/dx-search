@@ -1,9 +1,7 @@
 import _ from 'lodash';
-import levenshtein from 'fast-levenshtein';
 
 import diagnoses from './diagnoses';
-
-const levenshteinDistance = _.memoize(levenshtein.get, (a, b) => `${a}/${b}`);
+import similarity from './similarity';
 
 class SearchQuery {
   constructor(query) {
@@ -55,8 +53,8 @@ class SearchQuery {
 
   // The termMatchQuality of a term is the average wordMatchQuality
   // of each word in it.
-  // e.g. If the query is "brain canc", then
-  //   termMatchQuality("brain cancer") = (1 + 0.33) / 2 = 0.66
+  // e.g. If the query is "brain can", then
+  //   termMatchQuality("brain cancer") = (1 + 0.5) / 2 = 0.75
   termMatchQuality = (term) => {
     const words = term.split(' '),
           matchPctPerWord = words.map(this.wordMatchQuality);
@@ -65,18 +63,10 @@ class SearchQuery {
 
   // What is the closest that a given word in a diagnosis
   // comes to matching any of the words in the query?
-  // Levenshtein distance is used to give a measure of how close two words are:
-  //   1   => perfect match (Levenshtein distance = 0)
-  //   0.5 => 3/4 of the word matches (Levenstein distance = length / 4)
-  //   0   => 1/2 or less of the word matches(Levenstein distance <= length / 2)
-  // e.g. If the query is "brain canc", then:
-  //   wordMatchQuality("brain") = 1
-  //   wordMatchQuality("cancer") = 0.33
-  //   wordMatchQuality("aids") = 0
   wordMatchQuality = (dxWord) => (
-    Math.max(0, _.max(this.queryWords.map((queryWord) =>
-      1 - (levenshteinDistance(queryWord, dxWord) * 2 / dxWord.length)
-    )))
+    _.max(this.queryWords.map((queryWord) =>
+      similarity(dxWord, queryWord)
+    ))
   )
 }
 
