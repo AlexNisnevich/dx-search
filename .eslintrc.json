@@ -108,7 +108,6 @@
         "no-extend-native": "error",
         "no-extra-bind": "error",
         "no-extra-label": "error",
-        "no-extra-parens": "error",
         "no-floating-decimal": "error",
         "no-implicit-coercion": "error",
         "no-implicit-globals": "error",
@@ -187,7 +186,6 @@
             "error",
             "always"
         ],
-        "object-property-newline": "error",
         "object-shorthand": "error",
         "one-var": "error",
         "one-var-declaration-per-line": "error",
@@ -209,7 +207,6 @@
         "semi": "off",
         "semi-spacing": "error",
         "sort-imports": "off",
-        "sort-keys": "error",
         "space-before-blocks": "error",
         "space-before-function-paren": "off",
         "space-in-parens": [
