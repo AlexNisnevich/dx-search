@@ -32,8 +32,8 @@ export default class DiagnosisSearch extends Component {
       container: { padding: 50, textAlign: 'center' },
 
       textField: { fontSize, width },
-      input: { color: '#ddd' },
-      hint: { color: '#bbb' },
+      input: { color: '#ccc' },
+      hint: { color: '#999' },
 
       list: { maxHeight: 500, overflow: 'auto', width },
       result: { fontSize, width }

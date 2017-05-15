@@ -7,21 +7,21 @@ class SearchQuery {
     this.query = query.toLowerCase();
   }
 
+  get queryWords() {
+    return this.query.split(' ');
+  }
+
   get results() {
     if (this.query === '') {
       // No query => no matches.
       return [];
     } else if (this.exactMatches.length > 0) {
       // First check if there any exact matches. If so, return them.
-      return _.sortBy(this.exactMatches, _.negate(this.matchQuality))
+      return _.sortBy(this.exactMatches, this.matchQuality);
     } else {
       // Otherwise, perform a fuzzy search.
-      return _.sortBy(this.fuzzyMatches, _.negate(this.matchQuality))
+      return _.sortBy(this.fuzzyMatches, this.matchQuality);
     }
-  }
-
-  get queryWords() {
-    return this.query.split(' ');
   }
 
   get exactMatches() {
@@ -36,11 +36,12 @@ class SearchQuery {
     );
   }
 
-  // The matchQuality of a diagnosis is the max of the termMatchQualities
-  // of its constituent terms.
-  // (0 = no match, 1 = perfect match.)
+  // The matchQuality of a diagnosis is -1 * (the max of the termMatchQualities
+  // of its constituent terms).
+  // Note: Since _.sortBy sorts ascending, matchQuality is always negative.
+  // (0 = no match, -1 = perfect match.)
   matchQuality = (diagnosis) => (
-    _.max(diagnosis.terms.map(this.termMatchQuality))
+    -_.max(diagnosis.terms.map(this.termMatchQuality))
   )
 
   // Does the given term either exactly match the whole query
