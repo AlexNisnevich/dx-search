@@ -54,3 +54,14 @@ Many design decisions had to be made in the course of building `dx-search`:
 
 ## Further work
 
+**DxSearch** as written seems to work reasonably well for now, but, as mentioned above, my approach is certainly not scalable to larger sets of diagnoses.
+
+If, rather than 100 diagnoses, we were dealing with 1,000 or 10,000, the Levenshtein distance calculation would quickly become a performance bottleneck. Even if `fast-levenshtein` can do 1,800 calculations a second, waiting 5 seconds for results to come in is unacceptable. I would have to either get rid of `editDistanceSimilarity` completely or come up with some method to reduce the number of computations to perform (for example, we could only consider words that start with the same letter as each other, or even limit it to words with the same first two letters). This shouldn't affect users too much, since typos in practice seem to be rare at the start of words.
+
+If we had to deal with even more diagnoses than this, say, 100,000, it would start to make sense to move the search logic out of the client-side completely. At this point I would consider using an existing search solution such as Elasticsearch and Algolia, to ensure the most performant user experience possible.
+
+Fortunately, these changes can all be done without changing the `DiagnosisSearch` component at all, making the user experience consistent regardless of search backend choice.
+
+If I had just one week to create a search widget that could handle 100,000 diagnoses, I would opt to transition to an external full-text-search service, as mentioned above.
+
+If I had a month or more, though, I would instead consider creating my own performant search backend. The advantage of a DIY approach is that I could implement diagnosis-specific search rules that a context-agnostic service like Elasticsearch wouldn't be aware of. For example, something interesting could be done with hierarchical organizations of diagnoses such as ICD-9: users that are entering a very general diagnosis, for example, could have more specific sub-diagnoses appeach as suggestions.
