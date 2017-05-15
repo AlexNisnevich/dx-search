@@ -4,12 +4,12 @@
 
 **DxSearch** is a React JS app created with [`create-react-app`](https://github.com/facebookincubator/create-react-app) boilerplate. The code is organized as follows:
 
-- `src/App.js`– main entry point for the application
-- `src/components/DiagnosisSearch.js` – Search component, which takes in user input and calls the `search()` method exported from `util/search.js` to get the list of terms to display
-- `src/data/diagnoses.js` - Raw diagnosis strings from the email
-- `src/util/diagnoses.js` – Diagnoses pre-processing logic
-- `src/util/search.js` - Search logic, wrapped in a `SearchQuery` class
-- `src/util/similarity.js` – String similarity logic
+- [`src/App.js`](https://github.com/AlexNisnevich/dx-search/blob/master/src/App.js) – main entry point for the application
+- [`src/components/DiagnosisSearch.js`](https://github.com/AlexNisnevich/dx-search/blob/master/src/components/DiagnosisSearch.js) – Search component, which handles user input and calls the `search()` method exported from `util/search.js` to get the list of terms to display
+- [`src/data/diagnoses.js`](https://github.com/AlexNisnevich/dx-search/blob/master/data/diagnoses.js) - Raw diagnosis strings provided in the email
+- [`src/util/diagnoses.js`](https://github.com/AlexNisnevich/dx-search/blob/master/util/diagnoses.js) – Diagnoses pre-processing logic
+- [`src/util/search.js`](https://github.com/AlexNisnevich/dx-search/blob/master/util/search.js) - Search logic, wrapped in a `SearchQuery` class
+- [`src/util/similarity.js`](https://github.com/AlexNisnevich/dx-search/blob/master/util/similarity.js) – String similarity logic
 
 ## Evaluation criteria
 
