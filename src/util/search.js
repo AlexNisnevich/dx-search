@@ -13,9 +13,12 @@ class SearchQuery {
   }
 
   get results() {
-    if (this.query === '') {
+    if (this.query.length === 0) {
       // No query => no matches.
       return [];
+    } else if (this.query.length === 1) {
+      // Single-letter query => find all words that start with this letter.
+      return this.singleLetterMatches;
     } else if (this.exactMatches.length > 0) {
       // First check if there any exact matches. If so, return them.
       return _.sortBy(this.exactMatches, this.matchQuality);
@@ -25,9 +28,17 @@ class SearchQuery {
     }
   }
 
+  get singleLetterMatches() {
+    return diagnoses.filter((dx) =>
+      _.some(dx.terms, (term) =>
+        _.some(term.split(' '), ((word) => word.startsWith(this.query)))
+      )
+    );
+  }
+
   get exactMatches() {
     return diagnoses.filter((dx) =>
-      dx.terms.find(this.termContainsExactMatch)
+      _.some(dx.terms, this.termContainsExactMatch)
     );
   }
 
