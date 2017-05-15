@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "eslint-plugin-react": "^6.4.1",
+    "fast-levenshtein": "^2.0.6",
     "lodash": "^4.17.4",
     "material-ui": "^0.18.1",
     "prop-types": "^15.5.10",
