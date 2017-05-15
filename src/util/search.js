@@ -28,14 +28,14 @@ class SearchQuery {
   }
 
   get exactMatches() {
-    return diagnoses.filter((diagnosis) =>
-      diagnosis.terms.find(this.termContainsExactMatch)
+    return diagnoses.filter((dx) =>
+      dx.terms.find(this.termContainsExactMatch)
     );
   }
 
   get fuzzyMatches() {
-    return diagnoses.filter((diagnosis) =>
-      this.matchQuality(diagnosis) < 0
+    return diagnoses.filter((dx) =>
+      this.matchQuality(dx) < 0
     );
   }
 
@@ -43,8 +43,8 @@ class SearchQuery {
   // of its constituent terms).
   // Note: Since _.sortBy sorts ascending, matchQuality is always negative.
   // (0 = no match, -1 = perfect match.)
-  matchQuality = (diagnosis) => (
-    -_.max(diagnosis.terms.map(this.termMatchQuality))
+  matchQuality = (dx) => (
+    -_.max(dx.terms.map(this.termMatchQuality))
   )
 
   // Does the given term either exactly match the whole query
